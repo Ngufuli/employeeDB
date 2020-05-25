@@ -1,3 +1,3 @@
 # employeeDB
 
-# This is a simple MongoDB, express and NodeJS implementation of employee database
+# This is a MongoDB, express and NodeJS implementation of employee database

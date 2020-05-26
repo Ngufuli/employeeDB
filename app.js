@@ -5,6 +5,7 @@ const path = require('path');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const ejs = require('ejs');
+const bodyParser = require('body-parser');
 
 const employeeRoutes = require('./routes/employees');
 
@@ -17,6 +18,7 @@ mongoose.connect(process.env.DATABASE_LOCAL, {
     useCreateIndex: true
 });
 
+app.use(bodyParser.urlencoded({extended: true}));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -24,7 +26,7 @@ app.use(express.static('public'));
 
 app.use(employeeRoutes);
 
-const port = process.env.PORT || 4242;
+const port = process.env.PORT;
 app.listen(port, ()=>{
     console.log(`Server has started on port: ${port}`);
 })

@@ -1,12 +1,39 @@
 const express = require('express');
 const router = express.Router();
 
+const Employee = require('../models/employee');
+
 router.get('/', (req, res)=>{
-    res.render('index');
+    Employee.find({})
+        .then(employees =>{
+            res.render('index', {employees: employees});
+        })
+        .catch(err=>{
+           console.log(err)
+        })
+    
 });
 
-router.get('/employees/new', (req, res)=>{
+router.get('/employee/new', (req, res)=>{
     res.render('new');
+})
+
+router.post('/employee/new', (req, res)=>{
+    //below is the object that will collect data from the form
+    let newEmployee = {
+        name: req.body.name,
+        designation: req.body.designation,
+        salary: req.body.salary
+    }
+
+    Employee.create(newEmployee)
+        .then(employee =>{ 
+            res.redirect('/');
+        })
+        .catch(err =>{
+            console.log(err);
+        })
+
 })
 
 module.exports = router;

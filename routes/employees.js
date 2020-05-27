@@ -73,9 +73,40 @@ router.post('/employee/new', (req, res)=>{
 //post requests end here
 
 //put request start here
-router.put('/', (req, res)=>{
-
+router.put('/edit/:id', (req, res)=>{
+    let searchQuery = {
+        _id: req.params.id
+    }
+    Employee.update(searchQuery, {$set: {
+        name: req.body.name,
+        designation: req.body.designation,
+        salary: req.body.designation
+    }})
+    .then(employee =>{
+        res.redirect('/')
+    })
+    .catch(error=>{
+        console.log(error)
+    })
 });
 //put request end here
+
+//delete request starts here
+
+router.delete('/delete/:id', (req, res)=>{
+    let searchQuery = {
+        _id: req.params.id
+    }
+
+    Employee.deleteOne(searchQuery)
+        .then(employee=>{
+            res.redirect('/')
+        })
+        .catch(error=>{
+            console.log(error)
+        })
+})
+
+//delete request ends here
 
 module.exports = router;

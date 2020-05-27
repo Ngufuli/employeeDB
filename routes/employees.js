@@ -100,6 +100,7 @@ router.delete('/delete/:id', (req, res)=>{
 
     Employee.deleteOne(searchQuery)
         .then(employee=>{
+            req.flash('success_msg', "Employee deleted successfully");
             res.redirect('/')
         })
         .catch(error=>{

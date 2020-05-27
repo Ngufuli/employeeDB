@@ -66,6 +66,7 @@ router.post('/employee/new', (req, res)=>{
 
     Employee.create(newEmployee)
         .then(employee =>{ 
+            req.flash('success_msg', "Employee added to database successfully");
             res.redirect('/');
         })
         .catch(err =>{
@@ -87,6 +88,7 @@ router.put('/edit/:id', (req, res)=>{
         salary: req.body.designation
     }})
     .then(employee =>{
+        req.flash('success_msg', "Employee updated successfully");
         res.redirect('/')
     })
     .catch(error=>{

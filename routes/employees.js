@@ -10,7 +10,8 @@ router.get('/', (req, res)=>{
             res.render('index', {employees: employees});
         })
         .catch(err=>{
-           console.log(err)
+            req.flash('error_msg', "ERROR: "+error);
+            res.redirect('/');
         })
     
 });
@@ -32,7 +33,8 @@ router.get('/employee', (req, res)=>{
             res.render('search', {employee: employee});
         })
         .catch(err=>{
-            console.log(err)
+            req.flash('error_msg', "ERROR: "+error);
+            res.redirect('/');
         });
 });
 
@@ -45,7 +47,8 @@ router.get('/edit/:id', (req, res)=>{
             res.render('edit', {employee: employee})
         })
         .catch(error=>{
-            console.log(error)
+            req.flash('error_msg', "ERROR: "+error);
+            res.redirect('/');
         })
 });
 
@@ -66,7 +69,8 @@ router.post('/employee/new', (req, res)=>{
             res.redirect('/');
         })
         .catch(err =>{
-            console.log(err);
+            req.flash('error_msg', "ERROR: "+error);
+            res.redirect('/');
         })
 
 })
@@ -86,7 +90,8 @@ router.put('/edit/:id', (req, res)=>{
         res.redirect('/')
     })
     .catch(error=>{
-        console.log(error)
+        req.flash('error_msg', "ERROR: "+error);
+        res.redirect('/');
     })
 });
 //put request end here
@@ -101,10 +106,11 @@ router.delete('/delete/:id', (req, res)=>{
     Employee.deleteOne(searchQuery)
         .then(employee=>{
             req.flash('success_msg', "Employee deleted successfully");
-            res.redirect('/')
+            res.redirect('/');
         })
         .catch(error=>{
-            console.log(error)
+            req.flash('error_msg', "ERROR: "+error);
+            res.redirect('/');
         })
 })
 

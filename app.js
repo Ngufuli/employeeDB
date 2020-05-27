@@ -5,6 +5,8 @@ const path = require('path');
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const ejs = require('ejs');
+const session = require('express-session');
+const flash = require('connect-flash');
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 
@@ -26,7 +28,24 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
 //middleware for method override
-app.use(methodOverride('_method'))
+app.use(methodOverride('_method'));
+
+//middleware for express session
+app.use(session({
+    secret: 'express', 
+    resave: true,
+    saveUninitialized: true
+}))
+
+//middleware for connect flash 
+app.use(flash());
+
+//setting messages variables globally
+app.use((req, res, next)=>{
+    res.locals.success_msg = req.flash('success_msg');
+    res.locals.error_msg = req.flash('error_msg');
+    next();
+});
 
 app.use(employeeRoutes);
 

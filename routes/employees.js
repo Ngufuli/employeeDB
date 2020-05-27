@@ -35,6 +35,20 @@ router.get('/employee', (req, res)=>{
             console.log(err)
         });
 });
+
+router.get('/edit/:id', (req, res)=>{
+    let searchQuery = {
+        _id: req.params.id
+    }
+    Employee.findOne(searchQuery)
+        .then(employee=>{
+            res.render('edit', {employee: employee})
+        })
+        .catch(error=>{
+            console.log(error)
+        })
+});
+
 //get requests ends here
 
 
@@ -57,5 +71,11 @@ router.post('/employee/new', (req, res)=>{
 
 })
 //post requests end here
+
+//put request start here
+router.put('/', (req, res)=>{
+
+});
+//put request end here
 
 module.exports = router;

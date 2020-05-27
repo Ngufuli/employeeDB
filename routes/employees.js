@@ -3,6 +3,7 @@ const router = express.Router();
 
 const Employee = require('../models/employee');
 
+//get requests start here
 router.get('/', (req, res)=>{
     Employee.find({})
         .then(employees =>{
@@ -16,8 +17,28 @@ router.get('/', (req, res)=>{
 
 router.get('/employee/new', (req, res)=>{
     res.render('new');
-})
+});
 
+router.get('/employee/search', (req, res)=>{
+    res.render('search', {employee: ''});
+});
+
+router.get('/employee', (req, res)=>{
+    let searchQuery = {
+        name: req.query.name
+    }
+    Employee.findOne(searchQuery)
+        .then(employee =>{
+            res.render('search', {employee: employee});
+        })
+        .catch(err=>{
+            console.log(err)
+        });
+});
+//get requests ends here
+
+
+//post requests starts here
 router.post('/employee/new', (req, res)=>{
     //below is the object that will collect data from the form
     let newEmployee = {
@@ -35,5 +56,6 @@ router.post('/employee/new', (req, res)=>{
         })
 
 })
+//post requests end here
 
 module.exports = router;
